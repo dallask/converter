@@ -1,3 +1,14 @@
+/****************************
+
+Разработано в [empty]Studio
+    http://empty.pro
+    e-mail: studio@empty.pro
+    skype: dallas.kassel
+    ICQ: 210339681
+    vk: http://vk.com/empty_dev
+
+***************************/
+
 var curCodes = ['USD'];
 var curRate = 0;
 var rateTax = 1.05;
@@ -24,7 +35,7 @@ $(document).ready(function() {
 						+ ' = ' + $(value).find('Value').html() + ' руб.' + '</li>';
                     curRate = $(value).find('Value').html().substring(0,5);
                     curRate = curRate.replace(/,/g, "\.");
-                    curRate = parseFloat(curRate)*rateTax;
+                    curRate = parseFloat(curRate);
                     curRate = curRate.toString().substring(0,5);
 				}
 				$('#rates').html(rates);
@@ -45,7 +56,7 @@ $(document).ready(function() {
         if (prevVal !== curVal) {
             var rateUsd = $("#rate-usd").val().replace(/,/g, "\.");
             curRate = curRate.replace(/,/g, "\.");
-            var rateRur = (parseFloat(rateUsd)*parseFloat(curRate)).toFixed(2);
+            var rateRur = (parseFloat(rateUsd)*parseFloat(curRate)*rateTax).toFixed(2);
             if(!isNaN(rateRur)) {
                 $("#rate-rur").val(rateRur);
             } else {
