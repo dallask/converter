@@ -13,10 +13,21 @@ var curCodes = ['USD'];
 var curRate = 0;
 var rateTax = 1.05;
 $(document).ready(function() {
-	$.get('getrates.php', function(data) {
+
+    var d = new Date();
+
+    var curr_day = d.getUTCDate();
+    var curr_month = d.getMonth();
+    var curr_year = d.getFullYear();
+
+    curr_month++ ; // In js, first month is 0, not 1
+
+    var curDate = (curr_day < 10 ? '0' : '') + curr_day + "%2F" + (curr_month < 10 ? '0' : '') + curr_month + "%2F" + curr_year;
+
+	$.get('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D%27http%3A%2F%2Fwww.cbr.ru%2Fscripts%2FXML_daily.asp%3Fdate_req%3D' + curDate + '%27&format=xml&callback=', function(data) {
 		if (data != 'ERR') {
 			var rates = '';
-            $(data).each(function(){
+            $(data).find('ValCurs').each(function(){
                 if($(this).attr('Date')!=undefined) {
                     var rate_data = $(this).attr('Date');
                     var temp = $(this).attr('Date');

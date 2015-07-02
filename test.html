@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script>
+    $(document).ready(
+            function(){
+                $.getJSON("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D'http%3A%2F%2Fwww.cbr.ru%2Fscripts%2FXML_daily.asp%3F'&format=json&callback=")
+                        .done(
+                        function(data){
+                            var output = '<ul>';
+                            $(data.query.results.ValCurs.Valute).each(function(i, item){
+                                        output += '<li>' + item.Name + ' - ' + item.Value + '</li>';
+                                    }
+                            );
+                            output += '</ul>';
+                            $('#test').append($(output));
+                        }
+                )
+            }
+    );
+</script>
+<div id="test" />
+</body>
+</html>
